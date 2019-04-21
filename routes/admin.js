@@ -7,6 +7,8 @@ const Admin = require('../models/admin')
 const router = express.Router();
 
 router.post('/signup', (req,res,next) => {
+    console.log(req.body);
+    
  bcrypt.hash(req.body.cpassword, 10)
  .then( hash => {
     const admin = new Admin({

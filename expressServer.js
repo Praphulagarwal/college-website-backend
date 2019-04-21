@@ -1,20 +1,23 @@
 const path = require('path');
 const express = require('express');
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 
 const adminRoutes = require('./routes/admin');
+const aboutRoutes = require('./routes/admin-about');
 
 const app = express();
 
-mongoose.connect("mongodb+srv://praphul:oAFoGkREFwI0e6BK@cluster0-iwjdp.mongodb.net/user?retryWrites=true",{ useNewUrlParser: true })
+mongoose.connect("mongodb+srv://praphul:NuoY1jkAWLTqG9If@cluster0-iwjdp.mongodb.net/user?retryWrites=true",{ useNewUrlParser: true })
   .then( () => {
     console.log('Connected to Database');
   })
   .catch( () => {
     console.log('Connection Failed');
   });
+
+  
 
 function ignoreFavicon(req, res, next) {
     if (req.originalUrl === '/favicon.ico') {
@@ -25,8 +28,9 @@ function ignoreFavicon(req, res, next) {
   }
 app.use(ignoreFavicon);
 
-app.use(bodyParser.json());
+app.use(bodyParser.json( ));
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use("/images", express.static(path.join("images")));
 
 app.use((req,res,next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -34,11 +38,11 @@ app.use((req,res,next) => {
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
     next();
 });
-  
+
 
 
 app.use("/api/admin", adminRoutes);
-
+app.use("/api/dashboard/about/principal", aboutRoutes);
 
 
 module.exports = app;

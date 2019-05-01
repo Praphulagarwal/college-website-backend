@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 
 const adminRoutes = require('./routes/admin');
 const aboutRoutes = require('./routes/admin-about');
+const placedStRoutes = require('./routes/admin-placedStudents');
+const noticeRoutes = require('./routes/notice');
 
 const app = express();
 
@@ -43,6 +45,8 @@ app.use((req,res,next) => {
 
 app.use("/api/admin", adminRoutes);
 app.use("/api/dashboard/about/principal", aboutRoutes);
+app.use("/api/dashboard/placements/stPlacement",placedStRoutes);
+app.use("/api/dashboard",noticeRoutes);
 
 
 module.exports = app;
